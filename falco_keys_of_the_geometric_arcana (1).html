@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FALCO: Keys of the Geometric Arcana</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        garamond: ['"EB Garamond"', 'serif'],
+                    },
+                    colors: {
+                        gothic: {
+                            950: '#090a0f',
+                            900: '#12141c',
+                            800: '#1b1e2b',
+                            700: '#272b3c',
+                            gold: '#d4af37',
+                            crimson: '#991b1b',
+                            blue: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cinzel & EB Garamond -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'EB Garamond', serif;
+            background-color: #090a0f;
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 50% 20%, #1a1423 0%, #090a0f 70%);
+        }
+        h1, h2, h3, h4, .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        .gothic-border {
+            border: 2px solid #b45309;
+            box-shadow: 0 0 15px rgba(180, 83, 9, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+        .gothic-card {
+            background: linear-gradient(135deg, #181b26 0%, #0f1118 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+        }
+        .gothic-card:hover {
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+            transform: translateY(-2px);
+        }
+        .crimson-glow {
+            text-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
+        }
+        .gold-glow {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+        .blue-glow {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #272b3c;
+            border-radius: 4px;
+            border: 1px solid #b45309;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b45309;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-900 selection:text-amber-100">
+
+    <!-- Header & Navigation -->
+    <header class="border-b border-amber-900/50 bg-gothic-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-amber-900/30 border border-amber-600 flex items-center justify-center text-amber-400 font-cinzel font-bold text-xl gold-glow">
+                    F
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-cinzel font-bold tracking-wider text-amber-400 gold-glow">FALCO</h1>
+                    <p class="text-xs text-amber-200/70 tracking-widest uppercase">Keys of the Geometric Arcana</p>
+                </div>
+            </div>
+
+            <!-- Resource Ticker -->
+            <div class="flex items-center space-x-6 bg-gothic-950/80 px-4 py-2 rounded-lg border border-amber-900/40">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-coins text-amber-400"></i>
+                    <span class="text-xs tracking-wider uppercase text-amber-200/80">Coins:</span>
+                    <span id="header-coins" class="font-bold text-amber-400 font-cinzel text-lg">300</span>
+                </div>
+                <div class="h-4 w-px bg-amber-900/50"></div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-clone text-blue-400"></i>
+                    <span class="text-xs tracking-wider uppercase text-amber-200/80">Cards:</span>
+                    <span id="header-card-count" class="font-bold text-blue-400 font-cinzel text-lg">0</span>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex flex-wrap justify-center gap-1 bg-gothic-950 p-1.5 rounded-xl border border-amber-900/40">
+                <button onclick="switchTab('collection')" id="nav-collection" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-amber-400 bg-amber-950/50 border border-amber-700/50 shadow">Collection</button>
+                <button onclick="switchTab('starters')" id="nav-starters" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-slate-300 hover:text-amber-400">Starters</button>
+                <button onclick="switchTab('decks')" id="nav-decks" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-slate-300 hover:text-amber-400">Decks & Packs</button>
+                <button onclick="switchTab('market')" id="nav-market" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-slate-300 hover:text-amber-400">Market</button>
+                <button onclick="switchTab('trade')" id="nav-trade" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-slate-300 hover:text-amber-400">Trade</button>
+                <button onclick="switchTab('train')" id="nav-train" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-slate-300 hover:text-amber-400">Train</button>
+                <button onclick="switchTab('play')" id="nav-play" class="nav-btn px-3 py-1.5 rounded-lg text-sm font-cinzel transition-all text-slate-300 hover:text-amber-400">Play Arena</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Status & Limits Bar -->
+    <div class="bg-amber-950/30 border-y border-amber-900/30 py-1.5 px-4 text-xs text-amber-200/80 flex flex-wrap items-center justify-center gap-6">
+        <div class="flex items-center space-x-1.5">
+            <i class="fa-solid fa-shield-halved text-amber-500"></i>
+            <span><strong>Limit 1:</strong> No Real NFTs / Blockchain (100% Client-Side Local Archive)</span>
+        </div>
+        <div class="flex items-center space-x-1.5">
+            <i class="fa-solid fa-handshake-simple text-blue-400"></i>
+            <span><strong>Limit 2:</strong> Trust Model without Server-Side Validator (Peer/Tab Simulation)</span>
+        </div>
+        <div class="flex items-center space-x-1.5">
+            <i class="fa-solid fa-dice text-crimson"></i>
+            <span><strong>Limit 3:</strong> House Play & Market operate on Local State & RNG</span>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-6">
+
+        <!-- TAB 1: COLLECTION -->
+        <section id="tab-collection" class="tab-content space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gothic-900/60 p-4 rounded-xl border border-amber-900/30">
+                <div>
+                    <h2 class="text-2xl font-cinzel font-bold text-amber-400 gold-glow">Arcana Collection</h2>
+                    <p class="text-sm text-slate-400">Scan, photograph, upload, or inspect your geometric arcana.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                    <input type="text" id="collection-search" placeholder="Search cards..." oninput="renderCollection()" class="bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-sm text-amber-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 flex-grow md:w-64">
+                    <button onclick="openScanModal()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm px-4 py-2 rounded-lg border border-amber-500 transition shadow flex items-center space-x-2">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>Scan / Upload Card</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Collection Grid -->
+            <div id="collection-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated -->
+            </div>
+            <div id="collection-empty" class="hidden text-center py-16 text-slate-500 font-cinzel">
+                <i class="fa-solid fa-box-open text-4xl mb-3 text-amber-900/50"></i>
+                <p>Your collection is empty. Claim starter decks or scan a new card!</p>
+            </div>
+        </section>
+
+        <!-- TAB 2: STARTER DECKS -->
+        <section id="tab-starters" class="tab-content hidden space-y-6">
+            <div class="bg-gothic-900/60 p-6 rounded-xl border border-amber-900/30 text-center max-w-2xl mx-auto">
+                <h2 class="text-2xl font-cinzel font-bold text-amber-400 gold-glow mb-2">Claim Starter Decks</h2>
+                <p class="text-sm text-slate-300 mb-6">Instantly summon traditional and esoteric foundational decks into your collection to begin your journey.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="gothic-card p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-amber-400 font-cinzel font-bold text-lg mb-1"><i class="fa-solid fa-cards mr-2"></i>Euchre Deck</div>
+                            <p class="text-xs text-slate-400 mb-4">24 classic trump-focused playing cards (9 through Ace).</p>
+                        </div>
+                        <button onclick="claimStarterDeck('euchre')" class="w-full bg-amber-900/40 hover:bg-amber-800 text-amber-300 border border-amber-700/60 py-2 rounded-lg font-cinzel text-sm transition">Claim Euchre (24)</button>
+                    </div>
+
+                    <div class="gothic-card p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-amber-400 font-cinzel font-bold text-lg mb-1"><i class="fa-solid fa-coins mr-2"></i>Naipes Deck</div>
+                            <p class="text-xs text-slate-400 mb-4">40 standard Spanish deck cards (Oros, Copas, Espadas, Bastos).</p>
+                        </div>
+                        <button onclick="claimStarterDeck('naipes')" class="w-full bg-amber-900/40 hover:bg-amber-800 text-amber-300 border border-amber-700/60 py-2 rounded-lg font-cinzel text-sm transition">Claim Naipes (40)</button>
+                    </div>
+
+                    <div class="gothic-card p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-amber-400 font-cinzel font-bold text-lg mb-1"><i class="fa-solid fa-moon mr-2"></i>Tarot Deck</div>
+                            <p class="text-xs text-slate-400 mb-4">78 arcana complete set (22 Major + 56 Minor Arcana).</p>
+                        </div>
+                        <button onclick="claimStarterDeck('tarot')" class="w-full bg-amber-900/40 hover:bg-amber-800 text-amber-300 border border-amber-700/60 py-2 rounded-lg font-cinzel text-sm transition">Claim Tarot (78)</button>
+                    </div>
+
+                    <div class="gothic-card p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                            <div class="text-amber-400 font-cinzel font-bold text-lg mb-1"><i class="fa-solid fa-cube mr-2"></i>FALCO Codex</div>
+                            <p class="text-xs text-slate-400 mb-4">12 legendary geometric keys of the mystic codex.</p>
+                        </div>
+                        <button onclick="claimStarterDeck('codex')" class="w-full bg-amber-900/40 hover:bg-amber-800 text-amber-300 border border-amber-700/60 py-2 rounded-lg font-cinzel text-sm transition">Claim Codex (12)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: DECKS & PACKS -->
+        <section id="tab-decks" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Custom Decks Management -->
+                <div class="bg-gothic-900/60 p-6 rounded-xl border border-amber-900/30 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Custom Decks</h2>
+                        <button onclick="openCreateDeckModal()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-xs px-3 py-1.5 rounded-lg border border-amber-500 transition">Create Deck</button>
+                    </div>
+                    <div id="decks-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Packs Management -->
+                <div class="bg-gothic-900/60 p-6 rounded-xl border border-amber-900/30 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Card Packs</h2>
+                        <button onclick="openCreatePackModal()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-xs px-3 py-1.5 rounded-lg border border-amber-500 transition">Create Pack</button>
+                    </div>
+                    <div id="packs-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: MARKET -->
+        <section id="tab-market" class="tab-content hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gothic-900/60 p-4 rounded-xl border border-amber-900/30">
+                <div>
+                    <h2 class="text-2xl font-cinzel font-bold text-amber-400 gold-glow">Arcana Marketplace</h2>
+                    <p class="text-sm text-slate-400">List your cards for coin or acquire rare pieces from simulated collectors.</p>
+                </div>
+                <button onclick="openSellModal()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm px-4 py-2 rounded-lg border border-amber-500 transition shadow flex items-center space-x-2">
+                    <i class="fa-solid fa-tag"></i>
+                    <span>List Card for Sale</span>
+                </button>
+            </div>
+
+            <!-- Market Listings Grid -->
+            <div id="market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated -->
+            </div>
+            <div id="market-empty" class="hidden text-center py-16 text-slate-500 font-cinzel">
+                <i class="fa-solid fa-store-slash text-4xl mb-3 text-amber-900/50"></i>
+                <p>No active marketplace listings at the moment. Check back soon or list your own card!</p>
+            </div>
+        </section>
+
+        <!-- TAB 5: TRADE -->
+        <section id="tab-trade" class="tab-content hidden space-y-6">
+            <div class="bg-gothic-900/60 p-6 rounded-xl border border-amber-900/30 space-y-6 max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-cinzel font-bold text-amber-400 gold-glow">Peer-to-Peer Trade Network</h2>
+                        <p class="text-sm text-slate-400">Propose direct card exchanges with simulated travelers and scholars.</p>
+                    </div>
+                    <button onclick="openNewTradeModal()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm px-4 py-2 rounded-lg border border-amber-500 transition shadow">
+                        <i class="fa-solid fa-handshake mr-2"></i>Propose Trade
+                    </button>
+                </div>
+
+                <!-- Active Trades -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-cinzel font-bold text-amber-300 border-b border-amber-900/40 pb-2">Active Trade Proposals</h3>
+                    <div id="trades-list" class="space-y-3">
+                        <!-- Dynamically populated -->
+                    </div>
+                    <div id="trades-empty" class="hidden text-center py-10 text-slate-500 font-cinzel">
+                        <p>No active trade proposals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: TRAIN -->
+        <section id="tab-train" class="tab-content hidden space-y-6">
+            <div class="bg-gothic-900/60 p-6 rounded-xl border border-amber-900/30 max-w-3xl mx-auto space-y-6">
+                <div>
+                    <h2 class="text-2xl font-cinzel font-bold text-amber-400 gold-glow">Arcana Sanctuary Training</h2>
+                    <p class="text-sm text-slate-400">Spend 25 coins to elevate a card's power rating. Diminishing returns apply with each training tier; each session requires a brief rest period.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Select Card to Train</label>
+                            <select id="train-card-select" onchange="updateTrainCardPreview()" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-2.5 text-sm text-amber-100 focus:outline-none focus:border-amber-500 font-cinzel">
+                                <!-- Options populated -->
+                            </select>
+                        </div>
+                        <div id="train-stats-info" class="bg-gothic-950/80 p-4 rounded-xl border border-amber-900/40 space-y-2 text-sm">
+                            <div class="flex justify-between"><span class="text-slate-400">Current Power:</span> <span id="train-curr-power" class="font-bold text-amber-400 font-cinzel">0</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Times Trained:</span> <span id="train-curr-count" class="font-bold text-blue-400 font-cinzel">0</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Training Cost:</span> <span class="font-bold text-amber-400 font-cinzel">25 Coins</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Rest Status:</span> <span id="train-rest-status" class="font-bold text-emerald-400 font-cinzel">Ready</span></div>
+                        </div>
+                        <button id="train-btn" onclick="executeTraining()" class="w-full bg-amber-700 hover:bg-amber-600 disabled:opacity-50 text-amber-100 font-cinzel py-3 rounded-lg border border-amber-500 transition shadow font-bold tracking-wider">
+                            Commence Ritual Training (25 🪙)
+                        </button>
+                    </div>
+
+                    <div id="train-card-preview" class="flex justify-center">
+                        <!-- Card preview render -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: PLAY ARENA -->
+        <section id="tab-play" class="tab-content hidden space-y-6">
+            <div class="bg-gothic-900/60 p-6 rounded-xl border border-amber-900/30 max-w-4xl mx-auto space-y-6">
+                <div class="text-center space-y-2">
+                    <h2 class="text-2xl font-cinzel font-bold text-amber-400 gold-glow">The Arcana Arena</h2>
+                    <p class="text-sm text-slate-300">Challenge the House in tactical duels of destiny. Win coin rewards and relics.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Battle Mode -->
+                    <div class="gothic-card p-6 rounded-xl flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-red-950/50 border border-red-700 flex items-center justify-center text-red-400 text-lg">
+                                    <i class="fa-solid fa-chess-knight"></i>
+                                </div>
+                                <h3 class="text-lg font-cinzel font-bold text-amber-300">Tactical Battle (Best of 3)</h3>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">Select 3 cards from your collection. Face a random House hand in 3 sequential skirmishes where higher total power triumphs.</p>
+                        </div>
+                        <button onclick="startBattleGame()" class="w-full bg-red-900/40 hover:bg-red-800 text-red-200 border border-red-700/60 py-3 rounded-lg font-cinzel text-sm transition font-bold">
+                            Enter Battle Arena
+                        </button>
+                    </div>
+
+                    <!-- High Card Draw -->
+                    <div class="gothic-card p-6 rounded-xl flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-blue-950/50 border border-blue-700 flex items-center justify-center text-blue-400 text-lg">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <h3 class="text-lg font-cinzel font-bold text-amber-300">High Card Draw (2 of 3)</h3>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">A fast-paced test of fate. Draw 3 cards and win at least 2 rounds against the House's drawn arcana.</p>
+                        </div>
+                        <button onclick="startHighCardGame()" class="w-full bg-blue-900/40 hover:bg-blue-800 text-blue-200 border border-blue-700/60 py-3 rounded-lg font-cinzel text-sm transition font-bold">
+                            Play High Card Draw
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Game Container -->
+                <div id="game-active-container" class="hidden bg-gothic-950/90 p-6 rounded-xl border border-amber-900/60 space-y-4">
+                    <!-- Populated dynamically during gameplay -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modals -->
+
+    <!-- Scan / Upload Card Modal -->
+    <div id="modal-scan" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-gothic-900 border border-amber-600 rounded-xl max-w-lg w-full p-6 space-y-4 gothic-border">
+            <div class="flex justify-between items-center border-b border-amber-900/40 pb-3">
+                <h3 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Scan or Upload Arcana Card</h3>
+                <button onclick="closeModal('modal-scan')" class="text-slate-400 hover:text-amber-400"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Card Image (Upload File or URL)</label>
+                    <input type="file" id="scan-file-input" accept="image/*" onchange="handleImageUpload(event)" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-2 text-xs text-amber-100 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-cinzel file:bg-amber-950 file:text-amber-300 hover:file:bg-amber-900">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Card Name</label>
+                    <input type="text" id="scan-name" placeholder="e.g., The Obsidian Citadel" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Subtitle / Origin</label>
+                    <input type="text" id="scan-subtitle" placeholder="e.g., Key of the 9th Sphere" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Power Rating (1 - 100)</label>
+                        <input type="number" id="scan-power" value="50" min="1" max="100" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Suit / Category</label>
+                        <select id="scan-suit" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500 font-cinzel">
+                            <option value="Major Arcana">Major Arcana</option>
+                            <option value="Spades">Spades</option>
+                            <option value="Hearts">Hearts</option>
+                            <option value="Diamonds">Diamonds</option>
+                            <option value="Clubs">Clubs</option>
+                            <option value="Oros">Oros</option>
+                            <option value="Copas">Copas</option>
+                            <option value="Espadas">Espadas</option>
+                            <option value="Bastos">Bastos</option>
+                            <option value="Codex">Codex</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Mystic Notes & Lore</label>
+                    <textarea id="scan-notes" rows="3" placeholder="Inscribe lore, magical attributes, or notes..." class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-3 text-amber-100 focus:outline-none focus:border-amber-500 text-xs"></textarea>
+                </div>
+                <input type="hidden" id="scan-image-url" value="https://placehold.co/400x600/12141c/d4af37?text=Geometric+Arcana">
+            </div>
+            <div class="flex justify-end space-x-3 pt-3 border-t border-amber-900/40">
+                <button onclick="closeModal('modal-scan')" class="px-4 py-2 rounded-lg bg-gothic-950 text-slate-300 hover:text-white font-cinzel text-sm border border-amber-900/40">Cancel</button>
+                <button onclick="saveScannedCard()" class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm border border-amber-500 font-bold">Inscribe Card</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Card Modal -->
+    <div id="modal-edit" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-gothic-900 border border-amber-600 rounded-xl max-w-lg w-full p-6 space-y-4 gothic-border">
+            <div class="flex justify-between items-center border-b border-amber-900/40 pb-3">
+                <h3 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Edit Arcana Card</h3>
+                <button onclick="closeModal('modal-edit')" class="text-slate-400 hover:text-amber-400"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <input type="hidden" id="edit-card-id">
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Card Name</label>
+                    <input type="text" id="edit-name" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Subtitle / Origin</label>
+                    <input type="text" id="edit-subtitle" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Power Rating</label>
+                    <input type="number" id="edit-power" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Mystic Notes & Lore</label>
+                    <textarea id="edit-notes" rows="3" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-3 text-amber-100 focus:outline-none focus:border-amber-500 text-xs"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-between items-center pt-3 border-t border-amber-900/40">
+                <button onclick="deleteCurrentCard()" class="px-4 py-2 rounded-lg bg-red-950/60 hover:bg-red-900 text-red-300 font-cinzel text-xs border border-red-800">Delete Card</button>
+                <div class="flex space-x-3">
+                    <button onclick="closeModal('modal-edit')" class="px-4 py-2 rounded-lg bg-gothic-950 text-slate-300 font-cinzel text-sm border border-amber-900/40">Cancel</button>
+                    <button onclick="updateEditedCard()" class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm border border-amber-500 font-bold">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sell Card Modal -->
+    <div id="modal-sell" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-gothic-900 border border-amber-600 rounded-xl max-w-md w-full p-6 space-y-4 gothic-border">
+            <div class="flex justify-between items-center border-b border-amber-900/40 pb-3">
+                <h3 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">List Card on Marketplace</h3>
+                <button onclick="closeModal('modal-sell')" class="text-slate-400 hover:text-amber-400"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Select Card from Collection</label>
+                    <select id="sell-card-select" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-2.5 text-sm text-amber-100 font-cinzel">
+                        <!-- Options populated -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Asking Price (Coins)</label>
+                    <input type="number" id="sell-price" value="50" min="1" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-3 border-t border-amber-900/40">
+                <button onclick="closeModal('modal-sell')" class="px-4 py-2 rounded-lg bg-gothic-950 text-slate-300 font-cinzel text-sm border border-amber-900/40">Cancel</button>
+                <button onclick="confirmListCard()" class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm border border-amber-500 font-bold">List for Sale</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Deck Modal -->
+    <div id="modal-deck" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-gothic-900 border border-amber-600 rounded-xl max-w-lg w-full p-6 space-y-4 gothic-border">
+            <div class="flex justify-between items-center border-b border-amber-900/40 pb-3">
+                <h3 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Create Custom Deck</h3>
+                <button onclick="closeModal('modal-deck')" class="text-slate-400 hover:text-amber-400"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Deck Name</label>
+                    <input type="text" id="deck-name-input" placeholder="e.g., Vanguard of the Solstice" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-2">Select Cards for Deck</label>
+                    <div id="deck-cards-checkboxes" class="max-h-60 overflow-y-auto space-y-2 bg-gothic-950 p-3 rounded-lg border border-amber-900/40">
+                        <!-- Populated -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-3 border-t border-amber-900/40">
+                <button onclick="closeModal('modal-deck')" class="px-4 py-2 rounded-lg bg-gothic-950 text-slate-300 font-cinzel text-sm border border-amber-900/40">Cancel</button>
+                <button onclick="saveCustomDeck()" class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm border border-amber-500 font-bold">Save Deck</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Pack Modal -->
+    <div id="modal-pack" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-gothic-900 border border-amber-600 rounded-xl max-w-lg w-full p-6 space-y-4 gothic-border">
+            <div class="flex justify-between items-center border-b border-amber-900/40 pb-3">
+                <h3 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Group Decks into Pack</h3>
+                <button onclick="closeModal('modal-pack')" class="text-slate-400 hover:text-amber-400"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Pack Name</label>
+                    <input type="text" id="pack-name-input" placeholder="e.g., Grand Grimoire Anthology" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg px-3 py-2 text-amber-100 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-2">Select Decks to Include</label>
+                    <div id="pack-decks-checkboxes" class="max-h-60 overflow-y-auto space-y-2 bg-gothic-950 p-3 rounded-lg border border-amber-900/40">
+                        <!-- Populated -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-3 border-t border-amber-900/40">
+                <button onclick="closeModal('modal-pack')" class="px-4 py-2 rounded-lg bg-gothic-950 text-slate-300 font-cinzel text-sm border border-amber-900/40">Cancel</button>
+                <button onclick="saveCustomPack()" class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm border border-amber-500 font-bold">Save Pack</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Propose Trade Modal -->
+    <div id="modal-trade" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-gothic-900 border border-amber-600 rounded-xl max-w-lg w-full p-6 space-y-4 gothic-border">
+            <div class="flex justify-between items-center border-b border-amber-900/40 pb-3">
+                <h3 class="text-xl font-cinzel font-bold text-amber-400 gold-glow">Propose Trade with Traveler</h3>
+                <button onclick="closeModal('modal-trade')" class="text-slate-400 hover:text-amber-400"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Target Player / Traveler</label>
+                    <select id="trade-target-player" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-2.5 text-sm text-amber-100 font-cinzel">
+                        <option value="Grandmaster Vane">Grandmaster Vane</option>
+                        <option value="Lady Isolde">Lady Isolde</option>
+                        <option value="Merchant Alaric">Merchant Alaric</option>
+                        <option value="Oracle Zephyr">Oracle Zephyr</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Your Card to Offer</label>
+                    <select id="trade-my-card" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-2.5 text-sm text-amber-100 font-cinzel">
+                        <!-- Populated -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-cinzel text-amber-300 mb-1">Their Card You Want in Return</label>
+                    <select id="trade-their-card" class="w-full bg-gothic-950 border border-amber-900/50 rounded-lg p-2.5 text-sm text-amber-100 font-cinzel">
+                        <!-- Populated -->
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-3 border-t border-amber-900/40">
+                <button onclick="closeModal('modal-trade')" class="px-4 py-2 rounded-lg bg-gothic-950 text-slate-300 font-cinzel text-sm border border-amber-900/40">Cancel</button>
+                <button onclick="submitTradeProposal()" class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm border border-amber-500 font-bold">Transmit Proposal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Overlay -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+    <!-- Application Logic -->
+    <script>
+        // State Management & LocalStorage Synchronization
+        const STORAGE_KEY = 'falco_arcana_state_v1';
+
+        let gameState = {
+            coins: 300,
+            cards: [],
+            decks: [],
+            packs: [],
+            marketListings: [],
+            trades: [],
+            trainingRecords: {} // cardId -> { count, trainingUntil }
+        };
+
+        const simulatedTravelersPool = [
+            { name: "Grandmaster Vane", avatar: "fa-chess-king" },
+            { name: "Lady Isolde", avatar: "fa-chess-queen" },
+            { name: "Merchant Alaric", avatar: "fa-coins" },
+            { name: "Oracle Zephyr", avatar: "fa-eye" }
+        ];
+
+        function loadState() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    gameState = JSON.parse(saved);
+                } catch (e) {
+                    console.error("Error parsing saved state", e);
+                }
+            } else {
+                // Initialize with sample starter cards if empty
+                initDefaultState();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+            updateHeader();
+            // Dispatch custom event for immediate same-tab or cross-tab sync reaction if needed
+        }
+
+        // Listen for cross-tab storage changes
+        window.addEventListener('storage', (e) => {
+            if (e.key === STORAGE_KEY) {
+                loadState();
+                renderAll();
+                showToast("State synchronized from another browser tab.", "blue");
+            }
+        });
+
+        function initDefaultState() {
+            gameState.cards = [
+                {
+                    id: 'card_init_1',
+                    name: 'The Obsidian Tetrahedron',
+                    subtitle: 'Key of the 1st Sphere',
+                    power: 65,
+                    suit: 'Major Arcana',
+                    notes: 'Found in the ancient chambers of Falco.',
+                    imageUrl: 'https://placehold.co/400x600/12141c/d4af37?text=Tetrahedron',
+                    dateAdded: Date.now()
+                },
+                {
+                    id: 'card_init_2',
+                    name: 'Ace of Swords',
+                    subtitle: 'Naipes / Spanish Deck',
+                    power: 45,
+                    suit: 'Espadas',
+                    notes: 'Sharp edge of truth.',
+                    imageUrl: 'https://placehold.co/400x600/12141c/1e3a8a?text=Ace+of+Swords',
+                    dateAdded: Date.now()
+                }
+            ];
+            gameState.marketListings = [
+                {
+                    id: 'market_1',
+                    seller: 'Grandmaster Vane',
+                    price: 85,
+                    card: {
+                        id: 'market_card_1',
+                        name: 'The Golden Ouroboros',
+                        subtitle: 'Key of Eternity',
+                        power: 88,
+                        suit: 'Major Arcana',
+                        notes: 'A serpent devouring its tail in golden geometry.',
+                        imageUrl: 'https://placehold.co/400x600/12141c/d4af37?text=Ouroboros'
+                    }
+                },
+                {
+                    id: 'market_2',
+                    seller: 'Merchant Alaric',
+                    price: 40,
+                    card: {
+                        id: 'market_card_2',
+                        name: '7 of Cups',
+                        subtitle: 'Tarot Minor',
+                        power: 52,
+                        suit: 'Tarot',
+                        notes: 'Illusions and visions.',
+                        imageUrl: 'https://placehold.co/400x600/12141c/991b1b?text=7+of+Cups'
+                    }
+                }
+            ];
+            saveState();
+        }
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-amber-400', 'bg-amber-950/50', 'border', 'border-amber-700/50', 'shadow');
+                btn.classList.add('text-slate-300');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            activeBtn.classList.remove('text-slate-300');
+            activeBtn.classList.add('text-amber-400', 'bg-amber-950/50', 'border', 'border-amber-700/50', 'shadow');
+
+            renderTabContent(tabId);
+        }
+
+        function renderAll() {
+            updateHeader();
+            const activeTab = document.querySelector('.tab-content:not(.hidden)');
+            if (activeTab) {
+                const tabId = activeTab.id.replace('tab-', '');
+                renderTabContent(tabId);
+            }
+        }
+
+        function updateHeader() {
+            document.getElementById('header-coins').innerText = gameState.coins;
+            document.getElementById('header-card-count').innerText = gameState.cards.length;
+        }
+
+        function renderTabContent(tabId) {
+            if (tabId === 'collection') renderCollection();
+            else if (tabId === 'decks') renderDecksAndPacks();
+            else if (tabId === 'market') renderMarket();
+            else if (tabId === 'trade') renderTrades();
+            else if (tabId === 'train') initTrainTab();
+        }
+
+        // Collection & Scan
+        function renderCollection() {
+            const grid = document.getElementById('collection-grid');
+            const empty = document.getElementById('collection-empty');
+            const search = document.getElementById('collection-search').value.toLowerCase();
+
+            grid.innerHTML = '';
+            const filtered = gameState.cards.filter(c => c.name.toLowerCase().includes(search) || c.suit.toLowerCase().includes(search) || c.subtitle.toLowerCase().includes(search));
+
+            if (filtered.length === 0) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            filtered.forEach(card => {
+                const trainingData = gameState.trainingRecords[card.id] || { count: 0 };
+                const cardEl = document.createElement('div');
+                cardEl.className = 'gothic-card rounded-xl overflow-hidden flex flex-col justify-between p-4 relative group';
+                cardEl.innerHTML = `
+                    <div class="absolute top-3 right-3 bg-gothic-950/80 px-2 py-1 rounded border border-amber-900/50 text-xs font-cinzel text-amber-400 flex items-center space-x-1">
+                        <i class="fa-solid fa-bolt text-amber-500"></i>
+                        <span>${card.power}</span>
+                    </div>
+                    <div>
+                        <div class="h-44 rounded-lg overflow-hidden mb-3 border border-amber-900/40 bg-gothic-950 relative">
+                            <img src="${card.imageUrl}" alt="${card.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/400x600/12141c/d4af37?text=Arcana'">
+                        </div>
+                        <span class="text-[10px] uppercase font-cinzel tracking-wider text-amber-400/80 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-900/30">${card.suit}</span>
+                        <h4 class="text-base font-cinzel font-bold text-amber-300 mt-1 truncate">${card.name}</h4>
+                        <p class="text-xs text-slate-400 italic">${card.subtitle || ''}</p>
+                        ${trainingData.count > 0 ? `<p class="text-[10px] text-blue-400 font-cinzel mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i>Trained Tier +${trainingData.count}</p>` : ''}
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-amber-900/30 flex justify-between items-center">
+                        <button onclick="openEditModal('${card.id}')" class="text-xs font-cinzel text-amber-400 hover:text-amber-300 flex items-center space-x-1">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span>Edit / Lore</span>
+                        </button>
+                        <button onclick="quickSellCard('${card.id}')" class="text-xs font-cinzel text-slate-400 hover:text-red-400">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(cardEl);
+            });
+        }
+
+        function openScanModal() {
+            document.getElementById('scan-name').value = '';
+            document.getElementById('scan-subtitle').value = '';
+            document.getElementById('scan-power').value = '50';
+            document.getElementById('scan-notes').value = '';
+            document.getElementById('scan-image-url').value = 'https://placehold.co/400x600/12141c/d4af37?text=Scanned+Arcana';
+            document.getElementById('modal-scan').classList.remove('hidden');
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('scan-image-url').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveScannedCard() {
+            const name = document.getElementById('scan-name').value.trim() || 'Unnamed Scanned Arcana';
+            const subtitle = document.getElementById('scan-subtitle').value.trim();
+            const power = parseInt(document.getElementById('scan-power').value) || 50;
+            const suit = document.getElementById('scan-suit').value;
+            const notes = document.getElementById('scan-notes').value.trim();
+            const imageUrl = document.getElementById('scan-image-url').value;
+
+            const newCard = {
+                id: 'card_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+                name,
+                subtitle,
+                power,
+                suit,
+                notes,
+                imageUrl,
+                dateAdded: Date.now()
+            };
+
+            gameState.cards.push(newCard);
+            saveState();
+            closeModal('modal-scan');
+            renderCollection();
+            showToast(`Successfully inscribed "${name}" into your collection!`, 'gold');
+        }
+
+        function openEditModal(cardId) {
+            const card = gameState.cards.find(c => c.id === cardId);
+            if (!card) return;
+            document.getElementById('edit-card-id').value = card.id;
+            document.getElementById('edit-name').value = card.name;
+            document.getElementById('edit-subtitle').value = card.subtitle || '';
+            document.getElementById('edit-power').value = card.power;
+            document.getElementById('edit-notes').value = card.notes || '';
+            document.getElementById('modal-edit').classList.remove('hidden');
+        }
+
+        function updateEditedCard() {
+            const id = document.getElementById('edit-card-id').value;
+            const card = gameState.cards.find(c => c.id === id);
+            if (card) {
+                card.name = document.getElementById('edit-name').value.trim();
+                card.subtitle = document.getElementById('edit-subtitle').value.trim();
+                card.power = parseInt(document.getElementById('edit-power').value) || card.power;
+                card.notes = document.getElementById('edit-notes').value.trim();
+                saveState();
+                closeModal('modal-edit');
+                renderCollection();
+                showToast("Card attributes updated successfully.", "gold");
+            }
+        }
+
+        function deleteCurrentCard() {
+            const id = document.getElementById('edit-card-id').value;
+            gameState.cards = gameState.cards.filter(c => c.id !== id);
+            saveState();
+            closeModal('modal-edit');
+            renderCollection();
+            showToast("Card removed from collection.", "crimson");
+        }
+
+        function quickSellCard(cardId) {
+            gameState.cards = gameState.cards.filter(c => c.id !== cardId);
+            saveState();
+            renderCollection();
+            showToast("Card discarded.", "crimson");
+        }
+
+        // Claim Starter Decks
+        function claimStarterDeck(type) {
+            let newCards = [];
+            if (type === 'euchre') {
+                const suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
+                const ranks = ['9', '10', 'Jack', 'Queen', 'King', 'Ace'];
+                suits.forEach(suit => {
+                    ranks.forEach(rank => {
+                        newCards.push({
+                            id: 'euchre_' + suit + '_' + rank + '_' + Date.now(),
+                            name: `${rank} of ${suit}`,
+                            subtitle: 'Euchre Deck',
+                            power: 30 + Math.floor(Math.random() * 30),
+                            suit: suit,
+                            notes: 'Traditional 24-card trump deck piece.',
+                            imageUrl: `https://placehold.co/400x600/12141c/d4af37?text=${rank}+of+${suit}`,
+                            dateAdded: Date.now()
+                        });
+                    });
+                });
+            } else if (type === 'naipes') {
+                const suits = ['Oros', 'Copas', 'Espadas', 'Bastos'];
+                const values = ['1', '2', '3', '4', '5', '6', '7', 'Sota', 'Caballo', 'Rey'];
+                suits.forEach(suit => {
+                    values.forEach((val, idx) => {
+                        newCards.push({
+                            id: 'naipes_' + suit + '_' + val + '_' + Date.now(),
+                            name: `${val} of ${suit}`,
+                            subtitle: 'Spanish Naipes',
+                            power: 25 + (idx * 4),
+                            suit: suit,
+                            notes: 'Standard Spanish 40-card deck.',
+                            imageUrl: `https://placehold.co/400x600/12141c/1e3a8a?text=${val}+of+${suit}`,
+                            dateAdded: Date.now()
+                        });
+                    });
+                });
+            } else if (type === 'tarot') {
+                const majors = ['The Fool', 'The Magician', 'The High Priestess', 'The Empress', 'The Emperor', 'The Hierophant', 'The Lovers', 'The Chariot', 'Strength', 'The Hermit', 'Wheel of Fortune', 'Justice', 'The Hanged Man', 'Death', 'Temperance', 'The Devil', 'The Tower', 'The Star', 'The Moon', 'The Sun', 'Judgement', 'The World'];
+                majors.forEach((m, idx) => {
+                    newCards.push({
+                        id: 'tarot_major_' + idx + '_' + Date.now(),
+                        name: m,
+                        subtitle: 'Tarot Major Arcana',
+                        power: 60 + idx,
+                        suit: 'Major Arcana',
+                        notes: 'Esoteric Major Arcana key.',
+                        imageUrl: `https://placehold.co/400x600/12141c/991b1b?text=${encodeURIComponent(m)}`,
+                        dateAdded: Date.now()
+                    });
+                });
+                // Add 56 minor arcana simplified
+                for (let i = 1; i <= 56; i++) {
+                    newCards.push({
+                        id: 'tarot_minor_' + i + '_' + Date.now(),
+                        name: `Minor Arcana #${i}`,
+                        subtitle: 'Tarot Minor Arcana',
+                        power: 35 + (i % 25),
+                        suit: 'Tarot',
+                        notes: 'Minor arcana element.',
+                        imageUrl: `https://placehold.co/400x600/12141c/272b3c?text=Minor+%23${i}`,
+                        dateAdded: Date.now()
+                    });
+                }
+            } else if (type === 'codex') {
+                const codexNames = ['The Obsidian Tetrahedron', 'The Golden Ouroboros', 'The Crystal Sphere', 'The Infinite Spiral', 'The Chrono Pendulum', 'The Aether Prism', 'The Stellar Astrolabe', 'The Void Mirror', 'The Phoenix Glyph', 'The Zenith Monolith', 'The Eclipse Ring', 'The Falcon Sigil'];
+                codexNames.forEach((name, idx) => {
+                    newCards.push({
+                        id: 'codex_' + idx + '_' + Date.now(),
+                        name: name,
+                        subtitle: 'FALCO Codex',
+                        power: 75 + idx,
+                        suit: 'Codex',
+                        notes: 'Foundational geometric artifact of FALCO.',
+                        imageUrl: `https://placehold.co/400x600/12141c/d4af37?text=${encodeURIComponent(name)}`,
+                        dateAdded: Date.now()
+                    });
+                });
+            }
+
+            gameState.cards.push(...newCards);
+            saveState();
+            switchTab('collection');
+            showToast(`Successfully claimed ${type.toUpperCase()} starter set (${newCards.length} cards)!`, 'gold');
+        }
+
+        // Decks & Packs
+        function renderDecksAndPacks() {
+            const decksList = document.getElementById('decks-list');
+            decksList.innerHTML = '';
+            if (gameState.decks.length === 0) {
+                decksList.innerHTML = `<p class="text-xs text-slate-500 italic">No custom decks created yet.</p>`;
+            } else {
+                gameState.decks.forEach(deck => {
+                    const deckCards = gameState.cards.filter(c => deck.cardIds.includes(c.id));
+                    const totalPower = deckCards.reduce((acc, c) => acc + c.power, 0);
+                    const el = document.createElement('div');
+                    el.className = 'bg-gothic-950 p-4 rounded-xl border border-amber-900/40 flex justify-between items-center';
+                    el.innerHTML = `
+                        <div>
+                            <h4 class="font-cinzel font-bold text-amber-300 text-base">${deck.name}</h4>
+                            <p class="text-xs text-slate-400">${deckCards.length} Cards | Total Power: ${totalPower}</p>
+                        </div>
+                        <button onclick="deleteDeck('${deck.id}')" class="text-xs text-slate-400 hover:text-red-400"><i class="fa-solid fa-trash-can"></i></button>
+                    `;
+                    decksList.appendChild(el);
+                });
+            }
+
+            const packsList = document.getElementById('packs-list');
+            packsList.innerHTML = '';
+            if (gameState.packs.length === 0) {
+                packsList.innerHTML = `<p class="text-xs text-slate-500 italic">No packs created yet.</p>`;
+            } else {
+                gameState.packs.forEach(pack => {
+                    const packDecks = gameState.decks.filter(d => pack.deckIds.includes(d.id));
+                    const el = document.createElement('div');
+                    el.className = 'bg-gothic-950 p-4 rounded-xl border border-amber-900/40 flex justify-between items-center';
+                    el.innerHTML = `
+                        <div>
+                            <h4 class="font-cinzel font-bold text-amber-300 text-base">${pack.name}</h4>
+                            <p class="text-xs text-slate-400">${packDecks.length} Decks included</p>
+                        </div>
+                        <button onclick="deletePack('${pack.id}')" class="text-xs text-slate-400 hover:text-red-400"><i class="fa-solid fa-trash-can"></i></button>
+                    `;
+                    packsList.appendChild(el);
+                });
+            }
+        }
+
+        function openCreateDeckModal() {
+            document.getElementById('deck-name-input').value = '';
+            const container = document.getElementById('deck-cards-checkboxes');
+            container.innerHTML = '';
+            if (gameState.cards.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500">No cards in collection.</p>`;
+            } else {
+                gameState.cards.forEach(card => {
+                    const div = document.createElement('label');
+                    div.className = 'flex items-center space-x-2 text-xs text-amber-100 cursor-pointer hover:bg-amber-950/40 p-1 rounded';
+                    div.innerHTML = `<input type="checkbox" value="${card.id}" class="deck-card-checkbox rounded bg-gothic-900 border-amber-900 text-amber-600 focus:ring-0"><span>${card.name} (${card.power} Power)</span>`;
+                    container.appendChild(div);
+                });
+            }
+            document.getElementById('modal-deck').classList.remove('hidden');
+        }
+
+        function saveCustomDeck() {
+            const name = document.getElementById('deck-name-input').value.trim();
+            if (!name) {
+                showToast("Please enter a deck name.", "crimson");
+                return;
+            }
+            const checkboxes = document.querySelectorAll('.deck-card-checkbox:checked');
+            const cardIds = Array.from(checkboxes).map(cb => cb.value);
+            if (cardIds.length === 0) {
+                showToast("Please select at least one card for the deck.", "crimson");
+                return;
+            }
+
+            gameState.decks.push({
+                id: 'deck_' + Date.now(),
+                name,
+                cardIds
+            });
+            saveState();
+            closeModal('modal-deck');
+            renderDecksAndPacks();
+            showToast(`Custom deck "${name}" created successfully!`, "gold");
+        }
+
+        function deleteDeck(id) {
+            gameState.decks = gameState.decks.filter(d => d.id !== id);
+            saveState();
+            renderDecksAndPacks();
+            showToast("Deck deleted.", "crimson");
+        }
+
+        function openCreatePackModal() {
+            document.getElementById('pack-name-input').value = '';
+            const container = document.getElementById('pack-decks-checkboxes');
+            container.innerHTML = '';
+            if (gameState.decks.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500">No custom decks available. Create a deck first.</p>`;
+            } else {
+                gameState.decks.forEach(deck => {
+                    const div = document.createElement('label');
+                    div.className = 'flex items-center space-x-2 text-xs text-amber-100 cursor-pointer hover:bg-amber-950/40 p-1 rounded';
+                    div.innerHTML = `<input type="checkbox" value="${deck.id}" class="pack-deck-checkbox rounded bg-gothic-900 border-amber-900 text-amber-600 focus:ring-0"><span>${deck.name}</span>`;
+                    container.appendChild(div);
+                });
+            }
+            document.getElementById('modal-pack').classList.remove('hidden');
+        }
+
+        function saveCustomPack() {
+            const name = document.getElementById('pack-name-input').value.trim();
+            if (!name) {
+                showToast("Please enter a pack name.", "crimson");
+                return;
+            }
+            const checkboxes = document.querySelectorAll('.pack-deck-checkbox:checked');
+            const deckIds = Array.from(checkboxes).map(cb => cb.value);
+            if (deckIds.length === 0) {
+                showToast("Please select at least one deck for the pack.", "crimson");
+                return;
+            }
+
+            gameState.packs.push({
+                id: 'pack_' + Date.now(),
+                name,
+                deckIds
+            });
+            saveState();
+            closeModal('modal-pack');
+            renderDecksAndPacks();
+            showToast(`Card pack "${name}" created successfully!`, "gold");
+        }
+
+        function deletePack(id) {
+            gameState.packs = gameState.packs.filter(p => p.id !== id);
+            saveState();
+            renderDecksAndPacks();
+            showToast("Pack deleted.", "crimson");
+        }
+
+        // Market
+        function renderMarket() {
+            const grid = document.getElementById('market-grid');
+            const empty = document.getElementById('market-empty');
+            grid.innerHTML = '';
+
+            if (gameState.marketListings.length === 0) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            gameState.marketListings.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'gothic-card rounded-xl overflow-hidden flex flex-col justify-between p-4 relative';
+                el.innerHTML = `
+                    <div class="absolute top-3 right-3 bg-amber-950/90 px-2 py-1 rounded border border-amber-600 text-xs font-cinzel text-amber-400 font-bold gold-glow">
+                        ${item.price} 🪙
+                    </div>
+                    <div>
+                        <div class="h-44 rounded-lg overflow-hidden mb-3 border border-amber-900/40 bg-gothic-950">
+                            <img src="${item.card.imageUrl}" alt="${item.card.name}" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-[10px] uppercase font-cinzel text-slate-400">Seller: ${item.seller}</span>
+                        <h4 class="text-base font-cinzel font-bold text-amber-300 mt-1 truncate">${item.card.name}</h4>
+                        <p class="text-xs text-slate-400">Power: ${item.card.power}</p>
+                    </div>
+                    <button onclick="buyMarketItem('${item.id}')" class="mt-4 w-full bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-xs py-2 rounded-lg border border-amber-500 font-bold transition">
+                        Acquire for ${item.price} 🪙
+                    </button>
+                `;
+                grid.appendChild(el);
+            });
+        }
+
+        function openSellModal() {
+            const select = document.getElementById('sell-card-select');
+            select.innerHTML = '';
+            if (gameState.cards.length === 0) {
+                select.innerHTML = `<option>No cards available in collection</option>`;
+            } else {
+                gameState.cards.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.innerText = `${c.name} (Power: ${c.power})`;
+                    select.appendChild(opt);
+                });
+            }
+            document.getElementById('modal-sell').classList.remove('hidden');
+        }
+
+        function confirmListCard() {
+            const cardId = document.getElementById('sell-card-select').value;
+            const price = parseInt(document.getElementById('sell-price').value) || 50;
+            const card = gameState.cards.find(c => c.id === cardId);
+            if (!card) {
+                showToast("Invalid card selection.", "crimson");
+                return;
+            }
+
+            // Remove from collection and add to market
+            gameState.cards = gameState.cards.filter(c => c.id !== cardId);
+            gameState.marketListings.push({
+                id: 'market_' + Date.now(),
+                seller: 'You',
+                price,
+                card
+            });
+
+            saveState();
+            closeModal('modal-sell');
+            renderMarket();
+            showToast(`Listed "${card.name}" on the marketplace for ${price} coins.`, "gold");
+        }
+
+        function buyMarketItem(itemId) {
+            const item = gameState.marketListings.find(i => i.id === itemId);
+            if (!item) return;
+            if (gameState.coins < item.price) {
+                showToast("Insufficient coins to acquire this card.", "crimson");
+                return;
+            }
+
+            gameState.coins -= item.price;
+            gameState.cards.push(item.card);
+            gameState.marketListings = gameState.marketListings.filter(i => i.id !== itemId);
+            saveState();
+            renderMarket();
+            showToast(`Successfully acquired "${item.card.name}"!`, "gold");
+        }
+
+        // Trade Network
+        function renderTrades() {
+            const list = document.getElementById('trades-list');
+            const empty = document.getElementById('trades-empty');
+            list.innerHTML = '';
+
+            if (gameState.trades.length === 0) {
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            gameState.trades.forEach(trade => {
+                const el = document.createElement('div');
+                el.className = 'bg-gothic-950 p-4 rounded-xl border border-amber-900/40 flex flex-col md:flex-row justify-between items-start md:items-center gap-4';
+                el.innerHTML = `
+                    <div>
+                        <div class="flex items-center space-x-2 text-xs font-cinzel text-amber-400 mb-1">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>Traveler: ${trade.targetPlayer}</span>
+                            <span class="text-slate-500">•</span>
+                            <span class="text-slate-400 capitalize">${trade.status}</span>
+                        </div>
+                        <p class="text-sm text-amber-200">Offering your <strong class="text-amber-400">${trade.myCardName}</strong> for their <strong class="text-blue-400">${trade.theirCardName}</strong></p>
+                    </div>
+                    ${trade.status === 'pending' ? `
+                        <div class="flex space-x-2">
+                            <button onclick="acceptTrade('${trade.id}')" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-700 px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold">Accept</button>
+                            <button onclick="rejectTrade('${trade.id}')" class="bg-red-950/80 hover:bg-red-900 text-red-300 border border-red-700 px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold">Reject</button>
+                        </div>
+                    ` : `<span class="text-xs text-slate-500 font-cinzel uppercase">${trade.status}</span>`}
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function openNewTradeModal() {
+            const mySelect = document.getElementById('trade-my-card');
+            mySelect.innerHTML = '';
+            if (gameState.cards.length === 0) {
+                mySelect.innerHTML = `<option>No cards in collection</option>`;
+            } else {
+                gameState.cards.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.innerText = `${c.name} (${c.power} Power)`;
+                    mySelect.appendChild(opt);
+                });
+            }
+
+            const theirSelect = document.getElementById('trade-their-card');
+            theirSelect.innerHTML = `
+                <option value="tarot_1">The Magician (Tarot - 70 Power)</option>
+                <option value="codex_2">The Crystal Sphere (Codex - 77 Power)</option>
+                <option value="naipes_3">Rey de Oros (Naipes - 65 Power)</option>
+            `;
+
+            document.getElementById('modal-trade').classList.remove('hidden');
+        }
+
+        function submitTradeProposal() {
+            const targetPlayer = document.getElementById('trade-target-player').value;
+            const myCardId = document.getElementById('trade-my-card').value;
+            const myCard = gameState.cards.find(c => c.id === myCardId);
+            const theirSelect = document.getElementById('trade-their-card');
+            const theirCardName = theirSelect.options[theirSelect.selectedIndex].text;
+
+            if (!myCard) {
+                showToast("Please select a valid card to offer.", "crimson");
+                return;
+            }
+
+            gameState.trades.push({
+                id: 'trade_' + Date.now(),
+                targetPlayer,
+                myCardId: myCard.id,
+                myCardName: myCard.name,
+                theirCardName,
+                status: 'pending'
+            });
+
+            saveState();
+            closeModal('modal-trade');
+            renderTrades();
+            showToast("Trade proposal transmitted. Awaiting traveler response.", "gold");
+        }
+
+        function acceptTrade(tradeId) {
+            const trade = gameState.trades.find(t => t.id === tradeId);
+            if (!trade) return;
+
+            // Remove offered card and add received card
+            gameState.cards = gameState.cards.filter(c => c.id !== trade.myCardId);
+            gameState.cards.push({
+                id: 'card_trade_' + Date.now(),
+                name: trade.theirCardName.split('(')[0].trim(),
+                subtitle: `Acquired from ${trade.targetPlayer}`,
+                power: 70 + Math.floor(Math.random() * 15),
+                suit: 'Traded Arcana',
+                notes: `Traded with ${trade.targetPlayer}.`,
+                imageUrl: 'https://placehold.co/400x600/12141c/1e3a8a?text=Traded+Arcana',
+                dateAdded: Date.now()
+            });
+
+            trade.status = 'accepted';
+            saveState();
+            renderTrades();
+            showToast("Trade successfully completed!", "gold");
+        }
+
+        function rejectTrade(tradeId) {
+            const trade = gameState.trades.find(t => t.id === tradeId);
+            if (trade) {
+                trade.status = 'rejected';
+                saveState();
+                renderTrades();
+                showToast("Trade proposal rejected.", "crimson");
+            }
+        }
+
+        // Train Sanctuary
+        function initTrainTab() {
+            const select = document.getElementById('train-card-select');
+            select.innerHTML = '';
+            if (gameState.cards.length === 0) {
+                select.innerHTML = `<option>No cards available</option>`;
+                document.getElementById('train-btn').disabled = true;
+                return;
+            }
+            document.getElementById('train-btn').disabled = false;
+            gameState.cards.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.innerText = c.name;
+                select.appendChild(opt);
+            });
+            updateTrainCardPreview();
+        }
+
+        function updateTrainCardPreview() {
+            const cardId = document.getElementById('train-card-select').value;
+            const card = gameState.cards.find(c => c.id === cardId);
+            if (!card) return;
+
+            const trainingData = gameState.trainingRecords[card.id] || { count: 0, trainingUntil: 0 };
+            document.getElementById('train-curr-power').innerText = card.power;
+            document.getElementById('train-curr-count').innerText = trainingData.count;
+
+            const now = Date.now();
+            const restStatusEl = document.getElementById('train-rest-status');
+            const trainBtn = document.getElementById('train-btn');
+
+            if (trainingData.trainingUntil > now) {
+                const secondsLeft = Math.ceil((trainingData.trainingUntil - now) / 1000);
+                restStatusEl.innerText = `Resting (${secondsLeft}s)`;
+                restStatusEl.className = "font-bold text-amber-500 font-cinzel";
+                trainBtn.disabled = true;
+            } else {
+                restStatusEl.innerText = "Ready";
+                restStatusEl.className = "font-bold text-emerald-400 font-cinzel";
+                trainBtn.disabled = false;
+            }
+
+            const preview = document.getElementById('train-card-preview');
+            preview.innerHTML = `
+                <div class="gothic-card p-4 rounded-xl w-48 text-center space-y-2">
+                    <img src="${card.imageUrl}" class="w-full h-36 object-cover rounded border border-amber-900/40">
+                    <h5 class="font-cinzel font-bold text-amber-300 text-sm truncate">${card.name}</h5>
+                    <p class="text-xs text-amber-400">Power: ${card.power}</p>
+                </div>
+            `;
+        }
+
+        function executeTraining() {
+            const cardId = document.getElementById('train-card-select').value;
+            const card = gameState.cards.find(c => c.id === cardId);
+            if (!card) return;
+
+            if (gameState.coins < 25) {
+                showToast("Insufficient coins for training (Requires 25 🪙).", "crimson");
+                return;
+            }
+
+            gameState.coins -= 25;
+            if (!gameState.trainingRecords[card.id]) {
+                gameState.trainingRecords[card.id] = { count: 0, trainingUntil: 0 };
+            }
+
+            const record = gameState.trainingRecords[card.id];
+            record.count += 1;
+            // Diminishing returns: power gain decreases per training tier
+            const powerGain = Math.max(1, Math.floor(8 / record.count));
+            card.power += powerGain;
+            record.trainingUntil = Date.now() + 15000; // 15 second rest timer
+
+            saveState();
+            updateTrainCardPreview();
+            updateHeader();
+            showToast(`Training complete! ${card.name} gained +${powerGain} Power.`, "gold");
+        }
+
+        // Play Arena (Battle & High Card Draw)
+        function startBattleGame() {
+            if (gameState.cards.length < 3) {
+                showToast("You need at least 3 cards in your collection to enter Battle.", "crimson");
+                return;
+            }
+
+            const container = document.getElementById('game-active-container');
+            container.classList.remove('hidden');
+            container.innerHTML = `
+                <h3 class="text-lg font-cinzel font-bold text-amber-400 mb-3">Tactical Battle: Choose 3 Cards</h3>
+                <p class="text-xs text-slate-400 mb-4">Select 3 distinct cards to face the House.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 max-h-60 overflow-y-auto" id="battle-selection-grid">
+                    ${gameState.cards.map(c => `
+                        <div onclick="toggleBattleCardSelection(this, '${c.id}')" class="gothic-card p-3 rounded-lg cursor-pointer border border-amber-900/40 hover:border-amber-400 flex flex-col items-center text-center battle-card-item">
+                            <img src="${c.imageUrl}" class="w-20 h-24 object-cover rounded mb-2">
+                            <span class="text-xs font-cinzel font-bold text-amber-300 truncate w-full">${c.name}</span>
+                            <span class="text-[10px] text-amber-400">Power: ${c.power}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="executeBattleRound()" id="launch-battle-btn" disabled class="bg-amber-900/40 text-slate-500 border border-amber-900 py-2 px-6 rounded-lg font-cinzel text-sm font-bold transition">Launch Battle (Select 3)</button>
+            `;
+        }
+
+        let selectedBattleCards = [];
+        function toggleBattleCardSelection(el, cardId) {
+            if (el.classList.contains('border-amber-400')) {
+                el.classList.remove('border-amber-400', 'bg-amber-950/40');
+                selectedBattleCards = selectedBattleCards.filter(id => id !== cardId);
+            } else {
+                if (selectedBattleCards.length >= 3) {
+                    showToast("You may only select 3 cards for battle.", "crimson");
+                    return;
+                }
+                el.classList.add('border-amber-400', 'bg-amber-950/40');
+                selectedBattleCards.push(cardId);
+            }
+
+            const btn = document.getElementById('launch-battle-btn');
+            if (selectedBattleCards.length === 3) {
+                btn.disabled = false;
+                btn.className = "bg-amber-700 hover:bg-amber-600 text-amber-100 border border-amber-500 py-2 px-6 rounded-lg font-cinzel text-sm font-bold transition shadow";
+            } else {
+                btn.disabled = true;
+                btn.className = "bg-amber-900/40 text-slate-500 border border-amber-900 py-2 px-6 rounded-lg font-cinzel text-sm font-bold transition";
+            }
+        }
+
+        function executeBattleRound() {
+            const playerPower = selectedBattleCards.reduce((acc, id) => {
+                const c = gameState.cards.find(card => card.id === id);
+                return acc + (c ? c.power : 0);
+            }, 0);
+
+            // House generates random power
+            const housePower = 120 + Math.floor(Math.random() * 80);
+            const container = document.getElementById('game-active-container');
+
+            let resultHtml = `
+                <div class="text-center space-y-4 py-4">
+                    <h4 class="text-xl font-cinzel font-bold text-amber-300">Battle Duel Resolution</h4>
+                    <div class="flex justify-around items-center">
+                        <div class="bg-gothic-900 p-4 rounded-xl border border-amber-900">
+                            <span class="text-xs text-slate-400 font-cinzel">Your Combat Power</span>
+                            <div class="text-3xl font-cinzel font-bold text-amber-400 gold-glow">${playerPower}</div>
+                        </div>
+                        <span class="text-2xl font-cinzel font-bold text-slate-500">VS</span>
+                        <div class="bg-gothic-900 p-4 rounded-xl border border-red-900">
+                            <span class="text-xs text-slate-400 font-cinzel">House Combat Power</span>
+                            <div class="text-3xl font-cinzel font-bold text-red-400 crimson-glow">${housePower}</div>
+                        </div>
+                    </div>
+            `;
+
+            if (playerPower >= housePower) {
+                gameState.coins += 60;
+                resultHtml += `
+                    <div class="text-emerald-400 font-cinzel font-bold text-lg"><i class="fa-solid fa-trophy mr-2"></i>Victory! You conquered the House (+60 Coins).</div>
+                `;
+            } else {
+                gameState.coins = Math.max(0, gameState.coins - 20);
+                resultHtml += `
+                    <div class="text-red-400 font-cinzel font-bold text-lg"><i class="fa-solid fa-skull mr-2"></i>Defeat. The House prevailed (-20 Coins).</div>
+                `;
+            }
+
+            resultHtml += `
+                <button onclick="startBattleGame()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm px-6 py-2 rounded-lg border border-amber-500 font-bold">Battle Again</button>
+            </div>`;
+
+            selectedBattleCards = [];
+            saveState();
+            container.innerHTML = resultHtml;
+        }
+
+        function startHighCardGame() {
+            if (gameState.cards.length === 0) {
+                showToast("You need cards in your collection to play High Card Draw.", "crimson");
+                return;
+            }
+
+            // Pick 3 random player cards vs 3 house cards
+            const shuffled = [...gameState.cards].sort(() => 0.5 - Math.random());
+            const playerCards = shuffled.slice(0, 3);
+            let playerWins = 0;
+
+            const container = document.getElementById('game-active-container');
+            container.classList.remove('hidden');
+
+            let roundsHtml = `<h3 class="text-lg font-cinzel font-bold text-amber-400 mb-3">High Card Draw (2 of 3 Rounds)</h3><div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">`;
+
+            playerCards.forEach((card, idx) => {
+                const housePower = 40 + Math.floor(Math.random() * 50);
+                const win = card.power >= housePower;
+                if (win) playerWins++;
+                roundsHtml += `
+                    <div class="bg-gothic-900 p-4 rounded-xl border ${win ? 'border-emerald-600' : 'border-red-600'} text-center space-y-2">
+                        <span class="text-xs uppercase font-cinzel text-amber-300">Round ${idx+1}</span>
+                        <img src="${card.imageUrl}" class="w-20 h-24 object-cover mx-auto rounded border border-amber-900">
+                        <p class="text-xs font-cinzel font-bold text-amber-200">${card.name}</p>
+                        <p class="text-xs">Your Power: <strong class="text-amber-400">${card.power}</strong> vs House: <strong class="text-red-400">${housePower}</strong></p>
+                        <span class="inline-block px-2 py-0.5 rounded text-[10px] font-cinzel uppercase font-bold ${win ? 'bg-emerald-950 text-emerald-400 border border-emerald-700' : 'bg-red-950 text-red-400 border border-red-700'}">${win ? 'Win' : 'Loss'}</span>
+                    </div>
+                `;
+            });
+
+            const overallWin = playerWins >= 2;
+            if (overallWin) {
+                gameState.coins += 40;
+            }
+
+            roundsHtml += `</div>
+                <div class="text-center space-y-3">
+                    <div class="text-base font-cinzel font-bold ${overallWin ? 'text-emerald-400' : 'text-red-400'}">
+                        ${overallWin ? 'Series Victory! You won 40 Coins.' : 'Series Defeat. Better luck next fate.'}
+                    </div>
+                    <button onclick="startHighCardGame()" class="bg-amber-700 hover:bg-amber-600 text-amber-100 font-cinzel text-sm px-6 py-2 rounded-lg border border-amber-500 font-bold">Draw Again</button>
+                </div>
+            `;
+
+            saveState();
+            container.innerHTML = roundsHtml;
+        }
+
+        // Modal Helpers
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Toast Notification Helper
+        function showToast(message, type = 'gold') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            let borderColor = 'border-amber-500';
+            let textColor = 'text-amber-300';
+            if (type === 'crimson') {
+                borderColor = 'border-red-600';
+                textColor = 'text-red-300';
+            } else if (type === 'blue') {
+                borderColor = 'border-blue-500';
+                textColor = 'text-blue-300';
+            }
+            toast.className = `bg-gothic-900/95 border ${borderColor} p-4 rounded-xl shadow-2xl backdrop-blur text-sm font-cinzel ${textColor} pointer-events-auto transition duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<div class="flex items-center space-x-2"><i class="fa-solid fa-circle-info"></i><span>${message}</span></div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            loadState();
+            renderAll();
+        };
+    </script>
+</body>
+</html>
